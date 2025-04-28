@@ -4,7 +4,7 @@
     "slug": "Tracker-Ibadah",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/umma2.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,8 +13,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/umma2.png",
+        "backgroundColor": "#000000"
       }
     },
     "web": {
@@ -22,15 +22,20 @@
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
+    "splash": {
+      "image": "./assets/images/umma2.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#132821"
+    },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/umma2.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#000000"
         }
       ]
     ],
