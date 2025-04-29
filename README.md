@@ -1,50 +1,43 @@
-# Welcome to your Expo app 👋
+# 📿 Ibadah Tracker – Aplikasi Pencatatan Ibadah Harian
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplikasi mobile sederhana untuk mencatat dan memantau kegiatan ibadah harian pengguna. Dibangun dengan **React Native** menggunakan **Expo**, aplikasi ini menyimpan data secara lokal menggunakan **AsyncStorage** dan menyediakan antarmuka yang bersih serta ramah pengguna.
 
-## Get started
+---
 
-1. Install dependencies
+## ✨ Fitur Utama
 
-   ```bash
-   npm install
-   ```
+- ✅ Tambah, edit, dan hapus catatan ibadah
+- 📅 Input waktu ibadah dalam format bebas (contoh: 15 April 2025)
+- 📂 Kategori ibadah: **Wajib** dan **Sunnah**
+- 🔄 Tandai sebagai selesai / belum selesai
+- 📁 Penyimpanan data lokal menggunakan **AsyncStorage**
+- 🎨 UI dark mode elegan dengan Tailwind via `twrnc`
+- 📤 Filter berdasarkan kategori
 
-2. Start the app
+---
 
-   ```bash
-    npx expo start
-   ```
+## 🛠 Teknologi yang Digunakan
 
-In the output, you'll find options to open the app in a
+- [React Native](https://reactnative.dev/)
+- [Expo](https://expo.dev/)
+- [AsyncStorage](https://docs.expo.dev/versions/latest/sdk/async-storage/)
+- [Tailwind React Native Classnames (twrnc)](https://github.com/jaredh159/tailwind-react-native-classnames)
+- [React Native Picker](https://github.com/react-native-picker/picker)
+- [React Native Safe Area Context](https://github.com/th3rdwave/react-native-safe-area-context)
+- [Expo Icons](https://docs.expo.dev/guides/icons/)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## ⚙️ Instalasi dan Menjalankan Aplikasi
 
-## Get a fresh project
-
-When you're ready, run:
+### 1. Clone repositori
 
 ```bash
-npm run reset-project
-```
+git clone https://github.com/username/ibadah-tracker.git
+cd ibadah-tracker
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+npm install
+# atau
+yarn install
 
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+npm run android
