@@ -35,9 +35,16 @@ Aplikasi mobile sederhana untuk mencatat dan memantau kegiatan ibadah harian pen
 ```bash
 git clone https://github.com/username/ibadah-tracker.git
 cd ibadah-tracker
+```
 
-npm install
+### 2. Install Dependencies
+
+```npm install
 # atau
 yarn install
+```
+### 3. Run App from VSCODE to Android Studio
 
+```Install
 npm run android
+```
