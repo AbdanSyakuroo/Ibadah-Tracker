@@ -39,7 +39,8 @@ cd ibadah-tracker
 
 ### 2. Install Dependencies
 
-```npm install
+```
+npm install
 # atau
 yarn install
 ```
