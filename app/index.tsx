@@ -29,9 +29,26 @@ const index = () => {
   const generateId = () => Date.now().toString() + Math.random().toString(36).substr(2, 9);
 
   const [filterCategory, setFilterCategory] = useState('All');
-  const filteredList = filterCategory === 'All' 
-  ? list 
-  : list.filter(item => item.category === filterCategory);
+  const filteredList = filterCategory === 'All'
+    ? list
+    : list.filter(item => item.category === filterCategory);
+
+
+  const formatDateInput = (text: string) => {
+    // Hanya ambil angka
+    const cleaned = text.replace(/\D+/g, '');
+
+    // Format angka jadi dd/mm/yy
+    const day = cleaned.slice(0, 2);
+    const month = cleaned.slice(2, 4);
+    const year = cleaned.slice(4, 6);
+
+    let formatted = day;
+    if (month) formatted += '/' + month;
+    if (year) formatted += '/' + year;
+
+    return formatted;
+  };
 
 
   const saveibadahs = async () => {
@@ -44,64 +61,97 @@ const index = () => {
   };
 
   const addibadah = () => {
-    if (!ibadah.trim() || !waktu.trim() || !category.trim()) {
-      Alert.alert('Data Input Gagal', 'Belum Kamu Isi Datanya');
-      return;
-    }
-  
-    if (waktu.length < 8) {
-      Alert.alert('Gagal Input', 'Waktunya kok pendek, yang bener kamu');
-      return;
-    }
-    if (ibadah.length < 3) {
-      Alert.alert('Gagal Input', 'Nama Ibadahnya kok pendek, yang bener kamu');
-      return;
-    }
-  
-    const newibadah = {
-      id: editId || Date.now().toString(),
-      ibadah: ibadah.trim(),
-      waktu: waktu.trim(),
-      isCompleted: false,
-      category: category,
-    };
-  
-    if (editId) {
-      // Kalau sedang edit, konfirmasi simpan perubahan
-      Alert.alert(
-        'Konfirmasi Edit',
-        'Apakah kamu yakin ingin menyimpan perubahan?',
-        [
-          { text: 'Batal', style: 'cancel' },
-          {
-            text: 'Simpan',
-            onPress: () => {
-              const updated = list.map((item) => (item.id === editId ? newibadah : item));
-              setList(updated);
-              afterSave();
-            },
-          },
-        ]
-      );
-    } else {
-      // Kalau tambah baru, konfirmasi tambah
-      Alert.alert(
-        'Konfirmasi Tambah',
-        'Apakah kamu yakin ingin menambahkan ibadah ini?',
-        [
-          { text: 'Batal', style: 'cancel' },
-          {
-            text: 'Tambah',
-            onPress: () => {
-              setList([...list, newibadah]);
-              afterSave();
-            },
-          },
-        ]
-      );
-    }
+  if (!ibadah.trim() || !waktu.trim() || !category.trim()) {
+    Alert.alert('Data Input Gagal', 'Belum Kamu Isi Datanya');
+    return;
+  }
+
+  if (waktu.length !== 8) {
+    Alert.alert('Gagal Input', 'Format tanggal harus dd/mm/yy, contoh 15/04/25');
+    return;
+  }
+
+  const [hariStr, bulanStr, tahunStr] = waktu.split('/');
+  const hari = parseInt(hariStr, 10);
+  const bulan = parseInt(bulanStr, 10);
+  const tahun = parseInt(tahunStr, 10);
+
+  let isHariSalah = hari < 1 || hari > 31;
+  let isBulanSalah = bulan < 1 || bulan > 12;
+  let isTahunSalah = tahun > 45; // misal tahun maksimal 45 (2045)
+
+  if (isHariSalah && isBulanSalah && isTahunSalah) {
+    Alert.alert('Gagal Input', 'Hari, Bulan, dan Tahun melebihi batas');
+    return false;
+  } else if (isHariSalah && isBulanSalah) {
+    Alert.alert('Gagal Input', 'Hari dan Bulan melebihi batas');
+    return false;
+  } else if (isHariSalah && isTahunSalah) {
+    Alert.alert('Gagal Input', 'Hari dan Tahun melebihi batas');
+    return false;
+  } else if (isBulanSalah && isTahunSalah) {
+    Alert.alert('Gagal Input', 'Bulan dan Tahun melebihi batas');
+    return false;
+  } else if (isHariSalah) {
+    Alert.alert('Gagal Input', 'Hari melebihi batas (1-31)');
+    return false;
+  } else if (isBulanSalah) {
+    Alert.alert('Gagal Input', 'Bulan melebihi batas (1-12)');
+    return false;
+  } else if (isTahunSalah) {
+    Alert.alert('Gagal Input', 'Tahun melebihi batas (maksimal 45)');
+    return false;
+  }
+  if (ibadah.length < 3) {
+    Alert.alert('Gagal Input', 'Nama Ibadahnya kok pendek, yang bener kamu');
+    return;
+  }
+
+  const newibadah = {
+    id: editId || Date.now().toString(),
+    ibadah: ibadah.trim(),
+    waktu: waktu.trim(),
+    isCompleted: false,
+    category: category,
   };
-  
+
+  if (editId) {
+    // Kalau sedang edit
+    Alert.alert(
+      'Konfirmasi Edit',
+      'Apakah kamu yakin ingin menyimpan perubahan?',
+      [
+        { text: 'Batal', style: 'cancel' },
+        {
+          text: 'Simpan',
+          onPress: () => {
+            const updated = list.map((item) => (item.id === editId ? newibadah : item));
+            setList(updated);
+            afterSave();
+          },
+        },
+      ]
+    );
+  } else {
+    // Kalau tambah baru
+    Alert.alert(
+      'Konfirmasi Tambah',
+      'Apakah kamu yakin ingin menambahkan ibadah ini?',
+      [
+        { text: 'Batal', style: 'cancel' },
+        {
+          text: 'Tambah',
+          onPress: () => {
+            setList([...list, newibadah]);
+            afterSave();
+          },
+        },
+      ]
+    );
+  }
+};
+
+
   // Fungsi untuk reset form setelah save atau tambah
   const afterSave = () => {
     setibadah('');
@@ -110,7 +160,7 @@ const index = () => {
     setCategory('');
     setShowForm(false);
   };
-  
+
 
   const toggleComplete = (id: string) => {
     const updatedList = list.map((item) =>
@@ -206,7 +256,7 @@ const index = () => {
               <Text style={tw`text-white text-xl font-bold mb-6`}>
                 {editId ? 'Edit Ibadah' : 'Tambah Ibadah'}
               </Text>
-              
+
               <TextInput
                 style={tw`bg-[#132821] border-0 rounded-xl p-4 mb-4 text-white`}
                 placeholder="Nama Ibadah"
@@ -214,14 +264,15 @@ const index = () => {
                 value={ibadah}
                 onChangeText={setibadah}
               />
-              
+
               <TextInput
                 style={tw`bg-[#132821] border-0 rounded-xl p-4 mb-4 text-white`}
-                placeholder="Tanggal (Contoh: 15 April 2025)"
+                placeholder="Tanggal (dd/mm/yy)"
                 placeholderTextColor="#4A5568"
                 value={waktu}
-                onChangeText={setwaktu}
+                onChangeText={(text) => setwaktu(formatDateInput(text))}
               />
+
 
               <View style={tw`bg-[#132821] rounded-xl mb-6`}>
                 <Picker
@@ -239,11 +290,10 @@ const index = () => {
               <TouchableOpacity
                 disabled={ibadah === '' || waktu === '' || category === ''}
                 onPress={addibadah}
-                style={tw`p-4 rounded-xl mb-2 ${
-                  ibadah === '' || waktu === '' || category === '' 
-                  ? 'bg-gray-600 opacity-50' 
-                  : 'bg-[#4ADE80]'
-                }`}
+                style={tw`p-4 rounded-xl mb-2 ${ibadah === '' || waktu === '' || category === ''
+                    ? 'bg-gray-600 opacity-50'
+                    : 'bg-[#4ADE80]'
+                  }`}
               >
                 <Text style={tw`text-[#0A1A12] text-lg text-center font-bold`}>
                   {editId ? 'Simpan Perubahan' : 'Tambah Ibadah'}
@@ -291,8 +341,8 @@ const index = () => {
               data={filteredList}
               keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => (
-                <TouchableOpacity 
-                  onPress={() => toggleComplete(item.id)} 
+                <TouchableOpacity
+                  onPress={() => toggleComplete(item.id)}
                   activeOpacity={0.7}
                   style={tw`mb-4`}
                 >
@@ -306,7 +356,7 @@ const index = () => {
                     ${item.isCompleted ? 'border border-[#4ADE80]' : ''}
                   `}>
                     <View style={tw`flex-row items-center flex-1`}>
-                      <TouchableOpacity 
+                      <TouchableOpacity
                         onPress={() => toggleComplete(item.id)}
                         style={tw`mr-4`}
                       >
