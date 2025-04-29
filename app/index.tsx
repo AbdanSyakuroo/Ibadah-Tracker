@@ -96,7 +96,7 @@ const index = () => {
     Alert.alert('Gagal Input', 'Hari melebihi batas (1-31)');
     return false;
   } else if (isBulanSalah) {
-    Alert.alert('Gagal Input', 'Bulan melebihi batas (1-12)');
+    Alert.alert('Gagal Input', 'Bulan melebihi batas 12 atau bulan Desember');
     return false;
   } else if (isTahunSalah) {
     Alert.alert('Gagal Input', 'Tahun melebihi batas (maksimal 45)');
