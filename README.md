@@ -7,7 +7,7 @@ Aplikasi mobile sederhana untuk mencatat dan memantau kegiatan ibadah harian pen
 ## ✨ Fitur Utama
 
 - ✅ Tambah, edit, dan hapus catatan ibadah
-- 📅 Input waktu ibadah dalam format bebas (contoh: 15 April 2025)
+- 📅 Input waktu ibadah dalam format otomatisasi dengan memasukkan angka dan langsung menjadi format 23/21/23
 - 📂 Kategori ibadah: **Wajib** dan **Sunnah**
 - 🔄 Tandai sebagai selesai / belum selesai
 - 📁 Penyimpanan data lokal menggunakan **AsyncStorage**
