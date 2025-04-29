@@ -41,7 +41,7 @@ cd ibadah-tracker
 
 ```
 npm install
-# atau
+   atau
 yarn install
 ```
 ### 3. Run App from VSCODE to Android Studio
